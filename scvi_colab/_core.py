@@ -1,6 +1,9 @@
+import logging
 import subprocess
 import sys
 from typing import Optional
+
+logger = logging.getLogger(__name__)
 
 
 def install(
@@ -39,6 +42,8 @@ def install(
     if branch is not None and version is not None:
         raise ValueError("One of branch or version must be None.")
 
+    logger.info("Installing scvi-tools.")
+
     # temporary as pytorch 1.11 not in google colab
     # TODO: remove once pytorch 1.11 in colab with gpu
     _run_command("pip install pyro-ppl==1.8.0")
@@ -66,6 +71,8 @@ def install(
             success = True
         except:  # noqa: E722
             success = False
+
+    logger.info("Install successful. Testing import.")
 
     import scvi  # noqa: F401
 
