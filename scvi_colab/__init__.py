@@ -5,7 +5,7 @@ import logging
 from rich.console import Console
 from rich.logging import RichHandler
 
-from _core import install
+from ._core import install
 
 # https://github.com/python-poetry/poetry/pull/2366#issuecomment-652418094
 # https://github.com/python-poetry/poetry/issues/144#issuecomment-623927302
