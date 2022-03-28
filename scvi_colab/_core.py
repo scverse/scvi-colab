@@ -2,6 +2,7 @@ import logging
 import subprocess
 import sys
 from typing import Optional
+from warnings import warn
 
 logger = logging.getLogger(__name__)
 
@@ -32,10 +33,11 @@ def install(
     if not run_outside_colab:
         IN_COLAB = "google.colab" in sys.modules
         if not IN_COLAB:
-            raise ValueError(
+            warn(
                 """
                 Not currently in Google Colab environment.\n
-                Please run with `run_outside_colab=True` to override.
+                Please run with `run_outside_colab=True` to override.\n
+                Returning with no further action.
                 """
             )
 
