@@ -3,7 +3,28 @@ import sys
 from typing import Optional
 
 
-def install(branch: Optional[str] = None, run_outside_colab: bool = False):
+def install(
+    version: Optional[str] = None,
+    branch: Optional[str] = None,
+    run_outside_colab: bool = False,
+) -> None:
+    """
+    Install scvi-tools in Google Colab.
+
+    By default this installs the latest release of scvi-tools.
+
+    Parameters
+    ----------
+    version
+        The version to use to install from PyPI. Defaults to latest
+        version.
+    branch
+        The GitHub branch to use to install directly from GitHub.
+        Defaults to official installation. When not None, uses that
+        branch.
+    run_outside_colab
+        Override to run install function outside of Google Colab.
+    """
 
     if not run_outside_colab:
         IN_COLAB = "google.colab" in sys.modules
@@ -14,6 +35,9 @@ def install(branch: Optional[str] = None, run_outside_colab: bool = False):
                 Please run with `run_outside_colab=True` to override.
                 """
             )
+
+    if branch is not None and version is not None:
+        raise ValueError("One of branch or version must be None.")
 
     # temporary as pytorch 1.11 not in google colab
     # TODO: remove once pytorch 1.11 in colab with gpu
@@ -40,6 +64,8 @@ def install(branch: Optional[str] = None, run_outside_colab: bool = False):
             success = True
         except:  # noqa: E722
             success = False
+
+    import scvi  # noqa: F401
 
 
 def _run_command(command: str):
