@@ -46,7 +46,9 @@ def install(
     _run_command("pip install pynndescent")
 
     if branch is None:
-        command = "pip install --quiet 'scvi-tools[tutorials]'"
+        command = "pip install --quiet scvi-tools[tutorials]"
+        if version is not None:
+            command += f"=={version}"
     else:
         _run_command("pip install --quiet --upgrade jsonschema")
         repo = (
