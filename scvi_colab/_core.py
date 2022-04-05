@@ -75,9 +75,6 @@ def install(
         command = f"pip install --quiet git+{repo}"
     _run_command(command)
 
-    if not unfixed:
-        _run_command("pip install --upgrade rich==10.0.0")
-
     logger.info("Install successful. Testing import.")
 
     import scvi  # noqa: F401
