@@ -11,6 +11,7 @@ def install(
     version: Optional[str] = None,
     branch: Optional[str] = None,
     run_outside_colab: bool = False,
+    unfixed: bool = False,
 ) -> None:
     """
     Install scvi-tools in Google Colab.
@@ -28,6 +29,9 @@ def install(
         branch.
     run_outside_colab
         Override to run install function outside of Google Colab.
+    unfixed
+        Only run the scvi-tools installation part and bypass specific
+        fixes that are pinned in this function.
     """
 
     if not run_outside_colab:
@@ -46,11 +50,21 @@ def install(
 
     logger.info("Installing scvi-tools.")
 
-    # temporary as pytorch 1.11 not in google colab
-    # TODO: remove once pytorch 1.11 in colab with gpu
-    _run_command("pip install pyro-ppl==1.8.0")
+    if unfixed:
+        _run_command("pip install rich==10.0.0")
+        # temporary as pytorch 1.11 not in google colab
+        # TODO: remove once pytorch 1.11 in colab with gpu
+        _run_command("pip install pyro-ppl==1.8.0")
+        _run_command("pip install pynndescent")
+        # caching issues in colab causing pynndescent import to fail
+        success = False
+        while not success:
+            try:
+                import pynndescent  # noqa: F401
 
-    _run_command("pip install pynndescent")
+                success = True
+            except:  # noqa: E722
+                success = False
 
     if branch is None:
         command = "pip install --quiet scvi-tools[tutorials]"
@@ -63,16 +77,6 @@ def install(
         )
         command = f"pip install --quiet git+{repo}"
     _run_command(command)
-
-    # caching issues in colab causing pynndescent import to fail
-    success = False
-    while not success:
-        try:
-            import pynndescent  # noqa: F401
-
-            success = True
-        except:  # noqa: E722
-            success = False
 
     logger.info("Install successful. Testing import.")
 
