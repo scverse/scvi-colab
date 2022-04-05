@@ -51,7 +51,6 @@ def install(
     logger.info("Installing scvi-tools.")
 
     if unfixed:
-        _run_command("pip install rich==10.0.0")
         # temporary as pytorch 1.11 not in google colab
         # TODO: remove once pytorch 1.11 in colab with gpu
         _run_command("pip install pyro-ppl==1.8.0")
@@ -77,6 +76,9 @@ def install(
         )
         command = f"pip install --quiet git+{repo}"
     _run_command(command)
+
+    if unfixed:
+        _run_command("pip install --upgrade rich==10.0.0")
 
     logger.info("Install successful. Testing import.")
 
