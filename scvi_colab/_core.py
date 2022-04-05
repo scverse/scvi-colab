@@ -51,9 +51,6 @@ def install(
     logger.info("Installing scvi-tools.")
 
     if unfixed:
-        # temporary as pytorch 1.11 not in google colab
-        # TODO: remove once pytorch 1.11 in colab with gpu
-        _run_command("pip install pyro-ppl==1.8.0")
         _run_command("pip install pynndescent")
         # caching issues in colab causing pynndescent import to fail
         success = False
