@@ -70,7 +70,6 @@ def install(
         if version is not None:
             command += f"=={version}"
     else:
-        _run_command("pip install --quiet --upgrade jsonschema")
         repo = (
             f"https://github.com/scverse/scvi-tools@{branch}#egg=scvi-tools[tutorials]"
         )
