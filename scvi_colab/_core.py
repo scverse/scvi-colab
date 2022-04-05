@@ -51,6 +51,7 @@ def install(
     logger.info("Installing scvi-tools.")
 
     if unfixed:
+        _run_command("pip install torchtext==0.12.0 --no-deps")
         _run_command("pip install pynndescent")
         # caching issues in colab causing pynndescent import to fail
         success = False
