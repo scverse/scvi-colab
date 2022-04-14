@@ -4,6 +4,8 @@ import sys
 from typing import Optional
 from warnings import warn
 
+from pkg_resources import ContextualVersionConflict
+
 logger = logging.getLogger(__name__)
 
 
@@ -79,7 +81,12 @@ def install(
 
     logger.info("Install successful. Testing import.")
 
-    import scvi  # noqa: F401
+    try:
+        import scvi  # noqa: F401
+    except ContextualVersionConflict:
+        logger.warning(
+            "Import unsuccessful. Try restarting (not resetting) the session and running again."
+        )
 
 
 def _run_command(command: str):
