@@ -45,6 +45,7 @@ def install(
                 Returning with no further action.
                 """
             )
+            return
 
     if branch is not None and version is not None:
         raise ValueError("One of branch or version must be None.")
