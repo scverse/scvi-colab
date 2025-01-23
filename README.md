@@ -9,7 +9,7 @@ from scvi_colab import install
 install()
 
 # from a GitHub branch
-install(branch="0.14.x")
+install(branch="1.2.x")
 
 # A specific PyPI version
-install(version="0.15.1")
+install(version="1.2.2")
