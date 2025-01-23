@@ -13,6 +13,7 @@ def install(
     version: Optional[str] = None,
     branch: Optional[str] = None,
     run_outside_colab: bool = False,
+    for_tutorials: bool = True,
     unfixed: bool = False,
 ) -> None:
     """
@@ -31,6 +32,9 @@ def install(
         branch.
     run_outside_colab
         Override to run install function outside of Google Colab.
+    for_tutorials
+        Whether to install scvi-tools[tutorials] which consist of many
+        more packages to install and thus will add time.
     unfixed
         Only run the scvi-tools installation part and bypass specific
         fixes that are pinned in this function.
@@ -68,13 +72,17 @@ def install(
                 success = False
 
     if branch is None:
-        command = "pip install --quiet scvi-tools[tutorials]"
+        if for_tutorials:
+            command = "pip install --quiet scvi-tools[tutorials]"
+        else:
+            command = "pip install --quiet scvi-tools"
         if version is not None:
             command += f"=={version}"
     else:
-        repo = (
-            f"https://github.com/scverse/scvi-tools@{branch}#egg=scvi-tools[tutorials]"
-        )
+        if for_tutorials:
+            repo = f"https://github.com/scverse/scvi-tools@{branch}#egg=scvi-tools[tutorials]"
+        else:
+            repo = f"https://github.com/scverse/scvi-tools@{branch}#egg=scvi-tools"
         command = f"pip install --quiet git+{repo}"
     _run_command(command)
 
