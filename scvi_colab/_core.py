@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 import subprocess
 import sys
@@ -52,18 +54,18 @@ def install(
 
     logger.info("Installing scvi-tools.")
 
-    if not unfixed:
-        _run_command("pip install scanpy")
-        _run_command("pip install pynndescent")
-        # caching issues in colab causing pynndescent import to fail
-        success = False
-        while not success:
-            try:
-                import pynndescent  # noqa: F401
-
-                success = True
-            except:  # noqa: E722
-                success = False
+    # if not unfixed:
+    #     _run_command("pip install scanpy")
+    #     _run_command("pip install pynndescent")
+    #     # caching issues in colab causing pynndescent import to fail
+    #     success = False
+    #     while not success:
+    #         try:
+    #             import pynndescent  # noqa: F401
+    #
+    #             success = True
+    #         except:  # noqa: E722
+    #             success = False
 
     if branch is None:
         command = "pip install --quiet scvi-tools[tutorials]"
@@ -87,6 +89,5 @@ def install(
 
 
 def _run_command(command: str):
-
     process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
