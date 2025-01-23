@@ -8,6 +8,8 @@ on:
         branches: [main]
     pull_request:
         branches: [main]
+    schedule:
+        - cron: "0 10 * * *" # runs at 10:00 UTC (03:00 PST) every day
 
 jobs:
     build:
