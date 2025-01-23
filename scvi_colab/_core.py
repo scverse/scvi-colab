@@ -73,9 +73,9 @@ def install(
 
     if branch is None:
         if for_tutorials:
-            command = "pip install --quiet scvi-tools[tutorials]"
+            command = "python -m uv pip install --system --quiet scvi-tools[tutorials]"
         else:
-            command = "pip install --quiet scvi-tools"
+            command = "python -m uv pip install --system  --quiet scvi-tools"
         if version is not None:
             command += f"=={version}"
     else:
@@ -83,7 +83,7 @@ def install(
             repo = f"https://github.com/scverse/scvi-tools@{branch}#egg=scvi-tools[tutorials]"
         else:
             repo = f"https://github.com/scverse/scvi-tools@{branch}#egg=scvi-tools"
-        command = f"pip install --quiet git+{repo}"
+        command = f"python -m uv pip install --system --quiet git+{repo}"
     _run_command(command)
 
     logger.info("Install successful. Testing import.")
