@@ -68,7 +68,7 @@ def install(
     #             success = False
 
     if branch is None:
-        command = "pip install --quiet scvi-tools[tutorials]"
+        command = "pip install --quiet scvi-tools"
         if version is not None:
             command += f"=={version}"
     else:
