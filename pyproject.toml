@@ -41,7 +41,8 @@ python = ">=3.10,<4.0"
 
 
 [tool.poetry.extras]
-dev = ["black", "pytest", "flake8", "codecov", "pre-commit", "isort"]
+dev = ["setuptools", "black", "pytest", "flake8", "codecov", "pre-commit", "isort",
+    "pytest-pretty", "coverage"]
 
 
 [build-system]
