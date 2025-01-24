@@ -56,11 +56,18 @@ def install(
     if branch is not None and version is not None:
         raise ValueError("One of branch or version must be None.")
 
+    pip_command = "uv pip install --system "
+    try:
+        subprocess.call(["uv", "--version"])
+    except FileNotFoundError:
+        logger.debug("uv not installed, fallback to pip")
+        pip_command = "pip install "
+
     logger.info("Installing scvi-tools.")
 
     if not unfixed:
-        _run_command("pip install scanpy")
-        _run_command("pip install pynndescent")
+        _run_command(pip_command + "scanpy")
+        _run_command(pip_command + "pynndescent")
         # caching issues in colab causing pynndescent import to fail
         success = False
         while not success:
@@ -73,9 +80,9 @@ def install(
 
     if branch is None:
         if for_tutorials:
-            command = "python -m uv pip install --system --quiet scvi-tools[tutorials]"
+            command = pip_command + "--quiet scvi-tools[tutorials]"
         else:
-            command = "python -m uv pip install --system  --quiet scvi-tools"
+            command = pip_command + "--quiet scvi-tools"
         if version is not None:
             command += f"=={version}"
     else:
@@ -83,7 +90,7 @@ def install(
             repo = f"https://github.com/scverse/scvi-tools@{branch}#egg=scvi-tools[tutorials]"
         else:
             repo = f"https://github.com/scverse/scvi-tools@{branch}#egg=scvi-tools"
-        command = f"python -m uv pip install --system --quiet git+{repo}"
+        command = pip_command + f"--quiet git+{repo}"
     _run_command(command)
 
     logger.info("Install successful. Testing import.")
