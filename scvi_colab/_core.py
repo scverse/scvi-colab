@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 import subprocess
 import sys
@@ -11,6 +13,7 @@ def install(
     version: Optional[str] = None,
     branch: Optional[str] = None,
     run_outside_colab: bool = False,
+    for_tutorials: bool = True,
     unfixed: bool = False,
 ) -> None:
     """
@@ -29,6 +32,9 @@ def install(
         branch.
     run_outside_colab
         Override to run install function outside of Google Colab.
+    for_tutorials
+        Whether to install scvi-tools[tutorials] which consist of many
+        more packages to install and thus will add time.
     unfixed
         Only run the scvi-tools installation part and bypass specific
         fixes that are pinned in this function.
@@ -50,11 +56,18 @@ def install(
     if branch is not None and version is not None:
         raise ValueError("One of branch or version must be None.")
 
+    pip_command = "uv pip install --system "
+    try:
+        subprocess.call(["uv", "--version"])
+    except FileNotFoundError:
+        logger.debug("uv not installed, fallback to pip")
+        pip_command = "pip install "
+
     logger.info("Installing scvi-tools.")
 
     if not unfixed:
-        _run_command("pip install scanpy")
-        _run_command("pip install pynndescent")
+        _run_command(pip_command + "scanpy")
+        _run_command(pip_command + "pynndescent")
         # caching issues in colab causing pynndescent import to fail
         success = False
         while not success:
@@ -66,14 +79,18 @@ def install(
                 success = False
 
     if branch is None:
-        command = "pip install --quiet scvi-tools[tutorials]"
+        if for_tutorials:
+            command = pip_command + "--quiet scvi-tools[tutorials]"
+        else:
+            command = pip_command + "--quiet scvi-tools"
         if version is not None:
             command += f"=={version}"
     else:
-        repo = (
-            f"https://github.com/scverse/scvi-tools@{branch}#egg=scvi-tools[tutorials]"
-        )
-        command = f"pip install --quiet git+{repo}"
+        if for_tutorials:
+            repo = f"https://github.com/scverse/scvi-tools@{branch}#egg=scvi-tools[tutorials]"
+        else:
+            repo = f"https://github.com/scverse/scvi-tools@{branch}#egg=scvi-tools"
+        command = pip_command + f"--quiet git+{repo}"
     _run_command(command)
 
     logger.info("Install successful. Testing import.")
@@ -87,6 +104,5 @@ def install(
 
 
 def _run_command(command: str):
-
     process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()

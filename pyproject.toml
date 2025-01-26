@@ -5,14 +5,14 @@ profile = "black"
 skip_glob = ["docs/*", "scvi_colab/__init__.py"]
 
 [tool.poetry]
-authors = ["The scvi-tools development team <adamgayoso@berkeley.edu>"]
+authors = ["The scvi-tools development team <ori.kronfeld@weizmann.ac.il>"]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Intended Audience :: Science/Research",
   "Natural Language :: English",
-  "Programming Language :: Python :: 3.7",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "Operating System :: POSIX :: Linux",
   "Topic :: Scientific/Engineering :: Bio-Informatics",
 ]
@@ -25,27 +25,32 @@ packages = [
   {include = "scvi_colab"},
 ]
 readme = "README.md"
-version = "0.12.0"
+version = "0.13.0"
+requires-python = ">=3.10"
 
 [tool.poetry.dependencies]
 rich = "*"
-importlib-metadata = {version = ">=1.0", python = "<3.8"}
-black = {version = ">=22.1", optional = true}
+importlib-metadata = {version = ">=8.0.0", python = "<3.13"}
+black = {version = ">=24.1", optional = true}
 codecov = {version = ">=2.0.8", optional = true}
-flake8 = {version = ">=3.7.7", optional = true}
+flake8 = {version = ">=7.0.0", optional = true}
 isort = {version = ">=5.7", optional = true}
-pre-commit = {version = ">=2.7.1", optional = true}
-pytest = {version = ">=4.4", optional = true}
-python = ">=3.7,<4.0"
+pre-commit = {version = ">=4.0.0", optional = true}
+pytest = {version = ">=8.0.0", optional = true}
+setuptools = {version = ">=75.0.0", optional = true}
+pynndescent = {version = ">=0.5.11", optional = true}
+scanpy = {version = ">=1.10", optional = true}
+python = ">=3.10,<4.0"
 
 
 [tool.poetry.extras]
-dev = ["black", "pytest", "flake8", "codecov", "pre-commit", "isort"]
+dev = ["setuptools", "black", "pytest", "flake8", "codecov", "pre-commit", "isort",
+    "pytest-pretty", "coverage", "scanpy","pynndescent"]
 
 
 [build-system]
 build-backend = "poetry.masonry.api"
 requires = [
-  "poetry>=1.0",
+  "poetry>=1.0,<2",
   "setuptools", # keep it here or "pip install -e" would fail
 ]
