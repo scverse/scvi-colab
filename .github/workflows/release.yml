@@ -20,14 +20,9 @@ jobs:
                   python-version: "3.12"
 
             - name: Install poetry
-              uses: abatilo/actions-poetry@v2.0.0
+              uses: abatilo/actions-poetry@v3
               with:
                   poetry-version: 1.8.5
-
-            - name: Install dependencies
-              run: |
-                  pip install six
-                  poetry install
 
             - name: Build project for distribution
               run: poetry build
