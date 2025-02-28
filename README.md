@@ -14,6 +14,7 @@ install(branch="1.2.x")
 # A specific PyPI version
 install(version="1.2.2")
 
+```
 [//]: # (numfocus-fiscal-sponsor-attribution)
 
 scvi is part of the scverse® project ([website](https://scverse.org), [governance](https://scverse.org/about/roles)) and is fiscally sponsored by [NumFOCUS](https://numfocus.org/).
