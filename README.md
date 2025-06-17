@@ -17,7 +17,7 @@ install(branch="1.2.x")
 install(version="1.2.2")
 ```
 
-scvi is part of the scverse® project ([website](https://scverse.org),
+scvi-tools is part of the scverse® project ([website](https://scverse.org),
 [governance](https://scverse.org/about/roles)) and is fiscally sponsored by [NumFOCUS](https://numfocus.org/).
 If you like scverse® and want to support our mission,
 please consider making a tax-deductible [donation](https://numfocus.org/donate-to-scverse)
@@ -35,3 +35,5 @@ and a variety of other needs.
 </a>
 </div>
 <!-- markdownlint-enable MD033 -->
+
+Copyright (c) 2025, Yosef Lab, Weizmann Institute of Sceince
