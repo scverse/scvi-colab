@@ -36,4 +36,4 @@ and a variety of other needs.
 </div>
 <!-- markdownlint-enable MD033 -->
 
-Copyright (c) 2025, Yosef Lab, Weizmann Institute of Sceince
+Copyright (c) 2025, Yosef Lab, Weizmann Institute of Science
