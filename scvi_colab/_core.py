@@ -39,6 +39,7 @@ def install(
         Only run the scvi-tools installation part and bypass specific
         fixes that are pinned in this function.
     """
+
     from pkg_resources import ContextualVersionConflict
 
     if not run_outside_colab:
