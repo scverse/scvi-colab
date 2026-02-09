@@ -40,8 +40,6 @@ def install(
         fixes that are pinned in this function.
     """
 
-    from pkg_resources import ContextualVersionConflict
-
     if not run_outside_colab:
         IN_COLAB = "google.colab" in sys.modules
         if not IN_COLAB:
@@ -98,7 +96,7 @@ def install(
 
     try:
         import scvi  # noqa: F401
-    except ContextualVersionConflict:
+    except Exception:
         logger.warning(
             "Import unsuccessful. Try restarting (not resetting) the session and running again."
         )
