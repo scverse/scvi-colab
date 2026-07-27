@@ -109,4 +109,4 @@ def install(
 
 def _run_command(command: str):
     process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
-    output, error = process.communicate()
+    _output, _error = process.communicate()
