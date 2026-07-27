@@ -3,15 +3,14 @@ from __future__ import annotations
 import logging
 import subprocess
 import sys
-from typing import Optional
 from warnings import warn
 
 logger = logging.getLogger(__name__)
 
 
 def install(
-    version: Optional[str] = None,
-    branch: Optional[str] = None,
+    version: str | None = None,
+    branch: str | None = None,
     run_outside_colab: bool = False,
     for_tutorials: bool = True,
     unfixed: bool = False,
