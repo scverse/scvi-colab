@@ -25,25 +25,14 @@ jobs:
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         # see details (matrix, python-version, python-version-file, etc.)
         # https://github.com/actions/setup-python
-      - name: Install poetry
-        uses: abatilo/actions-poetry@0dd19c9498c3dc8728967849d0d2eae428a8a3d8 # v4
-      - name: Setup a local virtual environment (if no poetry.toml file)
-        run: |
-          poetry config virtualenvs.create true --local
-          poetry config virtualenvs.in-project true --local
-      - name: Install the project dependencies
-        run: poetry install
-
+      - name: Install build tooling
+        run: python -m pip install --upgrade pip build twine
       - name: Build project for distribution
-        run: poetry build
-
-      - name: Check Version
-        id: check-version
-        run: |
-          [[ "$(poetry version --short)" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] \
-            || echo "prerelease=true" >> "$GITHUB_OUTPUT"
-
+        run: python -m build
+      - name: Check package
+        run: twine check --strict dist/*
       - name: Publish to PyPI
         env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
-        run: poetry publish
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: twine upload dist/*
