@@ -4,7 +4,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "scvi-colab"
-version = "0.15.0"
+version = "0.16.0"
 description = "Lightweight helper to install scvi-tools in Google Colab."
 readme = "README.md"
 license = { file = "LICENSE" }
