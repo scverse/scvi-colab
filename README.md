@@ -31,7 +31,7 @@ and a variety of other needs.
   <img
     src="https://raw.githubusercontent.com/numfocus/templates/master/images/numfocus-logo.png"
     width="200"
-  >
+>
 </a>
 </div>
 <!-- markdownlint-enable MD033 -->
